@@ -5,7 +5,7 @@ Homebrew tap for [fakestack](https://github.com/0xdps/fake-stack) - a high-perfo
 ## Installation
 
 ```bash
-brew tap 0xdps/fakestack
+brew tap 0xdps/packages
 brew install fakestack
 ```
 
