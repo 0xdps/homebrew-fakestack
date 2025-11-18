@@ -1,4 +1,4 @@
-# homebrew-fakestack
+# homebrew-packages
 
 Homebrew tap for [fakestack](https://github.com/0xdps/fake-stack) - a high-performance database generator with realistic fake data.
 
