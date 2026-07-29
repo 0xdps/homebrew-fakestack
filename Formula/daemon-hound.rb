@@ -13,16 +13,18 @@ class DaemonHound < Formula
       url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_Darwin_x86_64.tar.gz"
       sha256 "62e147e5d7e3de1761f4ced30bc2310e0435725f1f29150d2c033d7e55d9008e"
 
-      define_method(:install) do
-        bin.install "dhd"
+      resource "app_bundle" do
+        url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_macOS_x86_64.dmg"
+        sha256 "PLACEHOLDER_SHA256_FOR_X86_64_DMG"
       end
     end
     if Hardware::CPU.arm?
       url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_Darwin_arm64.tar.gz"
       sha256 "b37ae182db488fcae0530b00c84dd3e496f48cbe224e4f3afd21daffa09c2df9"
 
-      define_method(:install) do
-        bin.install "dhd"
+      resource "app_bundle" do
+        url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_macOS_arm64.dmg"
+        sha256 "PLACEHOLDER_SHA256_FOR_ARM64_DMG"
       end
     end
   end
@@ -31,16 +33,61 @@ class DaemonHound < Formula
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
       url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_Linux_x86_64.tar.gz"
       sha256 "60fd906ca14b4bc53a6b457fd633da3d093e58e90e621e12a13de77bd3a7c405"
-      define_method(:install) do
-        bin.install "dhd"
-      end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
       url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_Linux_arm64.tar.gz"
       sha256 "a028340fbda83d5687361357289180eb8d9aa437cd2acff68caa55a783c2ceba"
-      define_method(:install) do
-        bin.install "dhd"
+    end
+  end
+
+  def install
+    # Install the raw binary first (fallback for all platforms)
+    bin.install "dhd"
+
+    # On macOS, also install the signed app bundle from the DMG
+    if OS.mac?
+      resource("app_bundle").stage do |staging|
+        dmg_file = Dir["*.dmg"].first
+        if dmg_file
+          # Mount the DMG
+          mount_point = `hdiutil attach #{dmg_file.shellescape} -nobrowse -readonly 2>&1 | tail -1 | awk '{print $NF}'`.strip
+          if mount_point && !mount_point.empty? && File.exist?(mount_point)
+            app_src = File.join(mount_point, "DaemonHound.app")
+            if File.exist?(app_src)
+              # Install the signed app bundle to the prefix
+              prefix.install Dir["#{app_src}"]
+
+              # Replace the raw binary symlink with one pointing to the signed bundle
+              rm_f bin/"dhd"
+              bin.install_symlink prefix/"DaemonHound.app/Contents/MacOS/dhd" => "dhd"
+            end
+            # Unmount the DMG
+            system "hdiutil", "detach", mount_point
+          end
+        end
       end
+    end
+  end
+
+  def caveats
+    if OS.mac?
+      <<~EOS
+        DaemonHound has been installed with the signed app bundle.
+
+        The signed app bundle is located at:
+          #{opt_prefix}/DaemonHound.app
+
+        You can also find it in your Applications folder by running:
+          ln -sf #{opt_prefix}/DaemonHound.app ~/Applications/DaemonHound.app
+
+        The CLI binary `dhd` is symlinked to the signed bundle's executable.
+      EOS
+    else
+      <<~EOS
+        DaemonHound has been installed.
+
+        Run `dhd init` to get started.
+      EOS
     end
   end
 
