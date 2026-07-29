@@ -1,0 +1,27 @@
+Casks/daemon-hound.rb
+  h_95aea6b4aa8772 1-18
+Formula/daemon-hound.rb
+  s_cbc643aee56405::t_321c94f143d5ef 16-18,25-27,40-67,72-92
+  s_cbc643aee56405::t_3b63972f565d3a 93
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "873101f41a28eafb1cd8f5eda396d4c00fd57166",
+  "prompts": {},
+  "humans": {
+    "h_95aea6b4aa8772": {
+      "author": "Devendra Pratap <dps.manit@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_cbc643aee56405": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "f9b4705c-bf1d-4a76-acba-a0cbffcbb815",
+        "model": "moonshotai/kimi-k2.6"
+      },
+      "human_author": "Devendra Pratap <dps.manit@gmail.com>"
+    }
+  }
+}
