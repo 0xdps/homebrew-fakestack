@@ -1,9 +1,11 @@
 cask "daemon-hound" do
-  version "1.1.4"
-  sha256 arm:   "DMG_SHA_FOR_ARM64",
-         intel: "DMG_SHA_FOR_X86_64"
+  arch arm: "arm64", intel: "x86_64"
 
-  url "https://github.com/0xdps/daemon-hound/releases/download/v#{version}/daemon-hound_#{version}_macOS_#{arch}.dmg"
+  version "1.1.5"
+  sha256 arm:   "49dedb0720a9f5268bbed64b6e064f11b04ae71a31d0fec25a7c91a9fa8ec73d",
+         intel: "7b02cc60c843360d557c2a352d7c71f5d5502fe3b78c2a1d56f692c9f4a089e1"
+
+  url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.5/daemon-hound_#{version}_macOS_#{arch}.dmg"
   name "DaemonHound"
   desc "Opinionated local config and secret management for developers"
   homepage "https://github.com/0xdps/daemon-hound"
@@ -12,7 +14,7 @@ cask "daemon-hound" do
   binary "#{appdir}/DaemonHound.app/Contents/MacOS/dhd", target: "dhd"
 
   zap trash: [
-    "~/.config/daemon-hound",
-    "~/.local/share/daemon-hound",
+    "~/Library/Application Support/DaemonHound",
+    "~/Library/Logs/DaemonHound",
   ]
 end
