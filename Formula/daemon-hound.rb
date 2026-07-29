@@ -5,21 +5,21 @@
 class DaemonHound < Formula
   desc "Opinionated local config and secret management for developers"
   homepage "https://github.com/0xdps/daemon-hound"
-  version "1.1.3"
+  version "1.1.4"
   license "AGPL-3.0"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.3/daemon-hound_1.1.3_Darwin_x86_64.tar.gz"
-      sha256 "3ca038dd4eb57c1643b0cc9bf3f53479a3c41bf6b1a947a0aecd590650873933"
+      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_Darwin_x86_64.tar.gz"
+      sha256 "62e147e5d7e3de1761f4ced30bc2310e0435725f1f29150d2c033d7e55d9008e"
 
       define_method(:install) do
         bin.install "dhd"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.3/daemon-hound_1.1.3_Darwin_arm64.tar.gz"
-      sha256 "64d3f2d48d41c9a68e270d906bb544caf2c356bb266259e03e712c659515ad36"
+      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_Darwin_arm64.tar.gz"
+      sha256 "b37ae182db488fcae0530b00c84dd3e496f48cbe224e4f3afd21daffa09c2df9"
 
       define_method(:install) do
         bin.install "dhd"
@@ -29,15 +29,15 @@ class DaemonHound < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.3/daemon-hound_1.1.3_Linux_x86_64.tar.gz"
-      sha256 "7bb17b8e73f26a5a683284014da0d8422156d9ce4587953ac8a57dd3282f24ad"
+      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_Linux_x86_64.tar.gz"
+      sha256 "60fd906ca14b4bc53a6b457fd633da3d093e58e90e621e12a13de77bd3a7c405"
       define_method(:install) do
         bin.install "dhd"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.3/daemon-hound_1.1.3_Linux_arm64.tar.gz"
-      sha256 "e2e0624c4fbcf5d6fd836608d0ff3fc0980e97f78c0646b942d6e67b0c453de4"
+      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_Linux_arm64.tar.gz"
+      sha256 "a028340fbda83d5687361357289180eb8d9aa437cd2acff68caa55a783c2ceba"
       define_method(:install) do
         bin.install "dhd"
       end
