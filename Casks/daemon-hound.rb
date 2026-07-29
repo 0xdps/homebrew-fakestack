@@ -2,8 +2,8 @@ cask "daemon-hound" do
   arch arm: "arm64", intel: "x86_64"
 
   version "1.1.5"
-  sha256 arm:   "4366b4d74c26ade850fc0882137393d4b97d7e23e69793280a5342a116908fe7",
-         intel: "a07a26b9db5f116f3d48a4bd35c8dc2d6b50a3d6b8dc24288abbf95ec0ca511f"
+  sha256 arm:   "fd78252fec99c47f9ee821d0f3013478e183841683e9550f2ec958b7ecad342f",
+         intel: "60571eabc34edf837a9a9913ee24fed6d56f1a4a103bd02973f2e252867537ca"
 
   url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.5/daemon-hound_#{version}_macOS_#{arch}.dmg"
   name "DaemonHound"
