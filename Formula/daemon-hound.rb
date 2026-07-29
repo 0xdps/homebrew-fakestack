@@ -11,7 +11,7 @@ class DaemonHound < Formula
   on_macos do
     if Hardware::CPU.intel?
       url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.5/daemon-hound_1.1.5_Darwin_x86_64.tar.gz"
-      sha256 "d7333cd4539d902492974af937776027eae0d1db391bfa75fa957902090d4724"
+      sha256 "46ea9c428dae122017fc3ac2196e910b0a3d415e9d919e55981b1697f4692c33"
 
       define_method(:install) do
         bin.install "dhd"
@@ -19,7 +19,7 @@ class DaemonHound < Formula
     end
     if Hardware::CPU.arm?
       url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.5/daemon-hound_1.1.5_Darwin_arm64.tar.gz"
-      sha256 "150784489c537e69698160c7d9a302a21d04bfb64e71bcab727bb40973b437d1"
+      sha256 "78cdc4a557034913b91c79f052fe5365ed958cc4be4d2c8380d68faf44fad28b"
 
       define_method(:install) do
         bin.install "dhd"
@@ -30,14 +30,14 @@ class DaemonHound < Formula
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
       url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.5/daemon-hound_1.1.5_Linux_x86_64.tar.gz"
-      sha256 "ab1d7ec4fc29ff94eef01e65341e7ac2d612b979f79a56789387dc907def1f6c"
+      sha256 "1835053e57c3554a26f2dbe61e209c7c522206912faaec1aef98dada026c9163"
       define_method(:install) do
         bin.install "dhd"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
       url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.5/daemon-hound_1.1.5_Linux_arm64.tar.gz"
-      sha256 "8a24dfa416d016f085f6b0a06921c6b43c0fbb59ac8850a3d2319394f0568135"
+      sha256 "b411dfec259df1779a807863e2cb4cea17466c49f0cb28baefdb113115774c8e"
       define_method(:install) do
         bin.install "dhd"
       end
