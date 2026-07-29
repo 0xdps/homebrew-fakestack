@@ -5,89 +5,42 @@
 class DaemonHound < Formula
   desc "Opinionated local config and secret management for developers"
   homepage "https://github.com/0xdps/daemon-hound"
-  version "1.1.4"
+  version "1.1.5"
   license "AGPL-3.0"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_Darwin_x86_64.tar.gz"
-      sha256 "62e147e5d7e3de1761f4ced30bc2310e0435725f1f29150d2c033d7e55d9008e"
+      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.5/daemon-hound_1.1.5_Darwin_x86_64.tar.gz"
+      sha256 "71271ec62aa021667647c72a7a09afb0af0ddd71f6c314649cd247dde445ecd6"
 
-      resource "app_bundle" do
-        url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_macOS_x86_64.dmg"
-        sha256 "PLACEHOLDER_SHA256_FOR_X86_64_DMG"
+      define_method(:install) do
+        bin.install "dhd"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_Darwin_arm64.tar.gz"
-      sha256 "b37ae182db488fcae0530b00c84dd3e496f48cbe224e4f3afd21daffa09c2df9"
+      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.5/daemon-hound_1.1.5_Darwin_arm64.tar.gz"
+      sha256 "b22bbbdc8cb4f23e8a63208adf946f151573dddedc14c74df6536c1b23c453b9"
 
-      resource "app_bundle" do
-        url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_macOS_arm64.dmg"
-        sha256 "PLACEHOLDER_SHA256_FOR_ARM64_DMG"
+      define_method(:install) do
+        bin.install "dhd"
       end
     end
   end
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_Linux_x86_64.tar.gz"
-      sha256 "60fd906ca14b4bc53a6b457fd633da3d093e58e90e621e12a13de77bd3a7c405"
-    end
-    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.4/daemon-hound_1.1.4_Linux_arm64.tar.gz"
-      sha256 "a028340fbda83d5687361357289180eb8d9aa437cd2acff68caa55a783c2ceba"
-    end
-  end
-
-  def install
-    # Install the raw binary first (fallback for all platforms)
-    bin.install "dhd"
-
-    # On macOS, also install the signed app bundle from the DMG
-    if OS.mac?
-      resource("app_bundle").stage do |staging|
-        dmg_file = Dir["*.dmg"].first
-        if dmg_file
-          # Mount the DMG
-          mount_point = `hdiutil attach #{dmg_file.shellescape} -nobrowse -readonly 2>&1 | tail -1 | awk '{print $NF}'`.strip
-          if mount_point && !mount_point.empty? && File.exist?(mount_point)
-            app_src = File.join(mount_point, "DaemonHound.app")
-            if File.exist?(app_src)
-              # Install the signed app bundle to the prefix
-              prefix.install Dir["#{app_src}"]
-
-              # Replace the raw binary symlink with one pointing to the signed bundle
-              rm_f bin/"dhd"
-              bin.install_symlink prefix/"DaemonHound.app/Contents/MacOS/dhd" => "dhd"
-            end
-            # Unmount the DMG
-            system "hdiutil", "detach", mount_point
-          end
-        end
+      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.5/daemon-hound_1.1.5_Linux_x86_64.tar.gz"
+      sha256 "917f1e1b8cc337defd8a4deaf702322cacb023ab7336112acbb31ac0aa5dad47"
+      define_method(:install) do
+        bin.install "dhd"
       end
     end
-  end
-
-  def caveats
-    if OS.mac?
-      <<~EOS
-        DaemonHound has been installed with the signed app bundle.
-
-        The signed app bundle is located at:
-          #{opt_prefix}/DaemonHound.app
-
-        You can also find it in your Applications folder by running:
-          ln -sf #{opt_prefix}/DaemonHound.app ~/Applications/DaemonHound.app
-
-        The CLI binary `dhd` is symlinked to the signed bundle's executable.
-      EOS
-    else
-      <<~EOS
-        DaemonHound has been installed.
-
-        Run `dhd init` to get started.
-      EOS
+    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
+      url "https://github.com/0xdps/daemon-hound/releases/download/v1.1.5/daemon-hound_1.1.5_Linux_arm64.tar.gz"
+      sha256 "5f9056fa5e48e2853bf7b718d7d8d784611fe9b6522c9b2082d6c0610a263ed1"
+      define_method(:install) do
+        bin.install "dhd"
+      end
     end
   end
 
